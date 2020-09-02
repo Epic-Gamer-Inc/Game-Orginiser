@@ -1,7 +1,6 @@
 from trueskill import *
 import json
 
-
 def FillFile(): #use to fill a json file for testing porposes
     try: 
         with open('Ranks.txt') as f:
@@ -30,7 +29,6 @@ def FillFile(): #use to fill a json file for testing porposes
         except Exception as a:
             print(a)
 
-
 def makeMatches(players,playerRanks): #creates matches out of an list/dictionary based off of rank will return [] if len(players) is not even
     matches = []
     if len(players)%2 == 0:
@@ -54,7 +52,6 @@ def makeMatches(players,playerRanks): #creates matches out of an list/dictionary
                 usedPlayers.append(bestMatch[1])
     return matches
 
-
 def catagorise(mmr): #returns the name of the rank based off mmr
     try:
         with open('RankNames.txt') as f:
@@ -64,9 +61,6 @@ def catagorise(mmr): #returns the name of the rank based off mmr
                     return f'{line[0][:-1]} {line[0][-1]}'
     except:
         return 'Undefined'
-
-
-
 
 if __name__ == "__main__":
     _playerRanks = {}
