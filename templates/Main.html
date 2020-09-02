@@ -1,0 +1,38 @@
+<link rel="stylesheet" href="static/template.css">
+
+<style>
+.profile-image {
+    width: 50px;
+    
+}
+</style>
+<div style = 'border: 2px solid black;'>
+{% if 'username' in session %}
+<img src="{{session['profile_picture_url']}}" class="profile-image" ><h3 style="display:inline">{{session['username']}}</h3>
+</div>
+<h1>The eSports Orgainser</h1>
+
+<h2><a href="/logout">
+    Log Out</h2></a>
+{% else %}
+<h2><a href="/login">
+    Log In</a></h2>
+{% endif %}
+
+<h2><a href="/set_picture">Set Profile Picture</a></h2>
+
+<h3>Input Post:</h3>
+<form action="/create_post" method="post">
+    <input type="text" name="message">
+    <input type="submit">
+</form>
+
+<h3>Posts:
+<ul>{% for post in posts %}
+    <li> <img src="{{post['picture']}}" class="profile-image">
+        <a href="/profile?username={{post['username']}}">
+            {{post["username"]}}</a>: {{post["message"]}}
+    </li>
+    {% endfor %}
+</ul>
+</h3>

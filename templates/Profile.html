@@ -1,0 +1,11 @@
+<link rel="stylesheet" href="static/template.css">
+
+<h1>User Profile</h1>
+
+{% for post in filtered_posts %}
+    <li> <img src="{{post['picture']}}" class="profile-image">
+        {{post["username"]}}: {{post["message"]}}
+    </li>
+    {% endfor %}
+
+<h2><a href="/">Home Page</a></h2>
