@@ -1,18 +1,14 @@
 from Rankings import *
+from flask import *
+import dataset
 
-_players = [
-    'A',
-    'B',
-    'C',
-    'D'
-]
-_playerRanks = {
-    'A': 2500,
-    'B': 1300,
-    'C': 2600,
-    'D': 1100
-}
+app = Flask(__name__)
+db = dataset.connect('sqlite:///twittle.db')
 
-print(makeMatches(_players,_playerRanks))
-for p in _players:
-    print(catagorise(_playerRanks[p]))
+app.secret_key = "kdJHGksdhjgldGHALKDJGHjg;98723048"
+
+@app.route('/')
+def index_get():
+    return render_template('Main.html')
+    
+app.run(debug=True)
