@@ -9,6 +9,7 @@ app.secret_key = "kdJHGksdhjgldGHALKDJGHjg;98723048"
 
 @app.route('/')
 def index_get():
+    
     return render_template('Main.html')
     
 app.run(debug=True)
