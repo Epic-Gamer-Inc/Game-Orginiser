@@ -38,8 +38,16 @@ def logout_get():
 
 @app.route('/login_post', methods=['post'])
 def login_post():
-    session['username'] = request.form['username']
-    return redirect('/')
+    db_user = db['users'].find_one(username='Jeremy')
+    db_password = str(db_user['password'])
+
+    typed_password = request.form['password']
+
+    if db_password == typed_password:
+        session['username'] = request.form['username']
+        return redirect('/')
+    else:
+        return "Invalid Password"
 
 @app.route('/create_post', methods=['post'])
 def create_post():
