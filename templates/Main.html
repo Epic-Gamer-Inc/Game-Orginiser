@@ -11,28 +11,29 @@
 <img src="{{session['profile_picture_url']}}" class="profile-image" ><h3 style="display:inline">{{session['username']}}</h3>
 </div>
 <h1>The eSports Orgainser</h1>
+<div class = 'main'>
+    <a href="/logout">
+        Log Out</a>
+    {% else %}
+    <a href="/login">
+        Log In</a>
+    {% endif %}
 
-<h2><a href="/logout">
-    Log Out</h2></a>
-{% else %}
-<h2><a href="/login">
-    Log In</a></h2>
-{% endif %}
+    <a href="/set_picture">Set Profile Picture</a>
+    <h3>Input Post:</h3>
+    
+        <form action="/create_post" method="post">
+            <input type="text" name="message">
+            <input type="submit">
+        </form>
 
-<h2><a href="/set_picture">Set Profile Picture</a></h2>
-
-<h3>Input Post:</h3>
-<form action="/create_post" method="post">
-    <input type="text" name="message">
-    <input type="submit">
-</form>
-
-<h3>Posts:
-<ul>{% for post in posts %}
-    <li> <img src="{{post['picture']}}" class="profile-image">
-        <a href="/profile?username={{post['username']}}">
-            {{post["username"]}}</a>: {{post["message"]}}
-    </li>
-    {% endfor %}
-</ul>
-</h3>
+    <h3>Posts:
+    <ul>{% for post in posts %}
+        <li> <img src="{{post['picture']}}" class="profile-image">
+            <a href="/profile?username={{post['username']}}">
+                {{post["username"]}}</a>: {{post["message"]}}
+        </li>
+        {% endfor %}
+    </ul>
+    </h3>
+</div>
