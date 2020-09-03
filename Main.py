@@ -49,6 +49,9 @@ def login_post():
     else:
         return "Invalid Password"
 
+@app.route('/create_account')
+def create_account():
+    return "https://www.youtube.com/watch?v=2liJsHOJcfw&list=PLtV8GdR6k9t9tBuHS8CP2d356Qjc1vbeP&index=16, 4:26"
 @app.route('/create_post', methods=['post'])
 def create_post():
     post_dictionary = {
