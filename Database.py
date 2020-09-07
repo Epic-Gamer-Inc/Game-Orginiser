@@ -53,6 +53,6 @@ def upDatePfp(imageName,user):
             'profilePic' : imageName
         }
     db['Players'].update(p,['id'])
-    
+
 if __name__ == '__main__':
     pass
