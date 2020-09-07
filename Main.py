@@ -3,13 +3,13 @@ from flask import *
 import dataset
 
 app = Flask(__name__)
-db = dataset.connect('sqlite:///twittle.db')
+db = dataset.connect('sqlite:///DataBase.db')
 
 app.secret_key = "kdJHGksdhjgldGHALKDJGHjg;98723048"
 
 @app.route('/')
 def main_get():
-    if 'username' not in session:
+    if 'name' not in session:
         return redirect('/login')
     return render_template("Main.html", posts=db['posts'])
 
@@ -38,20 +38,26 @@ def logout_get():
 
 @app.route('/login_post', methods=['post'])
 def login_post():
-    db_user = db['users'].find_one(username='Jeremy')
-    db_password = str(db_user['password'])
+    db_user = db['Players'].find_one(name='Skipper')
+    print('Start', db_user,'End')
+    db_password = str(db_user['passWord'])
 
     typed_password = request.form['password']
 
     if db_password == typed_password:
-        session['username'] = request.form['username']
+        session['name'] = request.form['username']
         return redirect('/')
     else:
         return "Invalid Password"
 
 @app.route('/create_account')
-def create_account():
-    return "https://www.youtube.com/watch?v=2liJsHOJcfw&list=PLtV8GdR6k9t9tBuHS8CP2d356Qjc1vbeP&index=16, 4:26"
+def create_account_get():
+    return render_template('create_account.html')
+
+@app.route('/create_account_post')
+def create_account_post():
+    return render_template('create_account.html')
+
 @app.route('/create_post', methods=['post'])
 def create_post():
     post_dictionary = {
