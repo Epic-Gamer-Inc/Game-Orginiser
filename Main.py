@@ -1,6 +1,8 @@
 from Rankings import *
 from flask import *
 import dataset
+import random
+import string
 
 app = Flask(__name__)
 db = dataset.connect('sqlite:///DataBase.db')
@@ -33,12 +35,12 @@ def set_picutre_post():
 
 @app.route('/logout')
 def logout_get():
-    del session['username']
+    del session['name']
     return redirect('/')
 
 @app.route('/login_post', methods=['post'])
 def login_post():
-    db_user = db['Players'].find_one(name='Skipper')
+    db_user = db['Players'].find_one(name=request.form['username'])
     print('Start', db_user,'End')
     db_password = str(db_user['passWord'])
 
@@ -50,13 +52,32 @@ def login_post():
     else:
         return "Invalid Password"
 
+def addUser(username,passWord):
+    userDict = {
+        'id' : CreateId('Players'),
+        'name':username,
+        'passWord' : passWord,
+        'team' : None,
+        'profilePic' : 'Defult.png'
+    }
+    db['Players'].insert(userDict)
+
+def CreateId(table):
+    length = 6
+    letters = string.ascii_lowercase
+    id = ''.join(random.choice(letters) for i in range(length))
+    while db[table].find_one(id=id):
+        id = ''.join(random.choice(letters) for i in range(length))
+    return id
+
 @app.route('/create_account')
 def create_account_get():
     return render_template('create_account.html')
 
-@app.route('/create_account_post')
+@app.route('/create_account_post', methods=['post'])
 def create_account_post():
-    return render_template('create_account.html')
+    addUser(request.form['makeusername'],request.form['makepassword'])
+    return redirect('/login')
 
 @app.route('/create_post', methods=['post'])
 def create_post():
