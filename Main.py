@@ -29,7 +29,7 @@ def set_picutre_post():
     file = request.files['file']
     filename_to_save = 'static/uploads/' + file.filename
     file.save(filename_to_save)
-    session['profilePic'] = filename_to_save
+    upDatePfp(filename_to_save, session['id'])
     return redirect("/")
 
 @app.route('/logout')
@@ -44,6 +44,7 @@ def login_post():
     typed_password = request.form['password']
     if db_password == typed_password:
         session['name'] = request.form['username']
+        session['id'] = db_user['id']
         return redirect('/')
     else:
         return "Invalid Password"
@@ -57,18 +58,6 @@ def create_account_get():
 def create_account_post():
     addUser(request.form['makeusername'],request.form['makepassword'])
     return redirect('/login')
-
-@app.route('/create_post', methods=['post'])
-def create_post():
-    post_dictionary = {
-        'message' : request.form['message'],
-        'username' : session['name'],
-        'picture' : session['profilePic']
-    }
-
-    db['posts'].insert(post_dictionary)
-
-    return redirect('/')
 
 @app.route('/profile')
 def profile_get():
