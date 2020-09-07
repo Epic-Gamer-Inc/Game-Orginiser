@@ -42,7 +42,6 @@ def logout_get():
 @app.route('/login_post', methods=['post'])
 def login_post():
     db_user = db['Players'].find_one(name=request.form['username'])
-    print('Start', db_user,'End')
     db_password = str(db_user['passWord'])
 
     typed_password = request.form['password']
@@ -67,8 +66,8 @@ def create_account_post():
 def create_post():
     post_dictionary = {
         'message' : request.form['message'],
-        'username' : session['username'],
-        'picture' : session['profile_picture_url']
+        'username' : session['name'],
+        'picture' : session['profilePic']
     }
 
     db['posts'].insert(post_dictionary)
@@ -77,7 +76,7 @@ def create_post():
 
 @app.route('/profile')
 def profile_get():
-    username = request.args['username']
+    username = request.args['name']
 
     filtered_posts = []
     for post in db['posts']:

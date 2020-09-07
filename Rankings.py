@@ -1,5 +1,4 @@
 from trueskill import *
-
 import json
 
 def FillFile(): #use to fill a json file for testing porposes
@@ -32,26 +31,31 @@ def FillFile(): #use to fill a json file for testing porposes
 
 def makeMatches(players,playerRanks): #creates matches out of an list/dictionary based off of rank will return [] if len(players) is not even
     matches = []
-    if len(players)%2 == 0:
-        usedPlayers = []
-        for p1 in players:
-            if p1 not in usedPlayers:
-                name1 = p1
-                oddsOfDraw = -1
-                bestMatch = ''
-                usedPlayers.append(name1)
-                p1 = Rating(playerRanks[p1]/100)
-                for p2 in players:
-                    if name1 != p2 and p2 not in usedPlayers:
-                        name2 = p2
-                        p2 = Rating(playerRanks[p2]/100)
-                        q = quality_1vs1(p1,p2)
-                        if q > oddsOfDraw:
-                            bestMatch = (name1,name2)
-                            oddsOfDraw = q
+    queue = []
+    usedPlayers = []
+    for p1 in players:
+        if p1 not in usedPlayers:
+            name1 = p1
+            oddsOfDraw = .25
+            bestMatch = name1
+            usedPlayers.append(name1)
+            p1 = Rating(playerRanks[p1]/100)
+            for p2 in players:
+                if name1 != p2 and p2 not in usedPlayers:
+                    name2 = p2
+                    p2 = Rating(playerRanks[p2]/100)
+                    q = quality_1vs1(p1,p2)
+                    if q > oddsOfDraw:
+                        bestMatch = tuple((name1,name2))
+                        oddsOfDraw = q
+            if type(bestMatch) == tuple:
                 matches.append(bestMatch)
                 usedPlayers.append(bestMatch[1])
-    return matches
+            else:
+                print(bestMatch)
+                print('='*10)
+                queue.append(bestMatch)
+    return matches, queue
 
 def catagorise(mmr): #returns the name of the rank based off mmr
     try:
