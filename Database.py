@@ -39,7 +39,7 @@ def CreateTeam(players,name):
         'player1' : players[1],
         'player2' : players[2],
         'player3' : players[3],
-        'player4' : players[4],
+        'player4' : players[4]
     }
     db['Teams'].insert(teamDict)
     for player in players:
