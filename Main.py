@@ -29,9 +29,7 @@ def set_picutre_post():
     file = request.files['file']
     filename_to_save = 'static/uploads/' + file.filename
     file.save(filename_to_save)
-
-    session['profile_picture_url'] = filename_to_save
-
+    session['profilePic'] = filename_to_save
     return redirect("/")
 
 @app.route('/logout')
@@ -43,9 +41,7 @@ def logout_get():
 def login_post():
     db_user = db['Players'].find_one(name=request.form['username'])
     db_password = str(db_user['passWord'])
-
     typed_password = request.form['password']
-
     if db_password == typed_password:
         session['name'] = request.form['username']
         return redirect('/')
@@ -77,11 +73,7 @@ def create_post():
 @app.route('/profile')
 def profile_get():
     username = request.args['name']
-
     filtered_posts = []
-    for post in db['posts']:
-        if post['username'] == username:
-            filtered_posts.append(post)
     return render_template('Profile.html', filtered_posts=filtered_posts)
 
 app.run(debug=True)
