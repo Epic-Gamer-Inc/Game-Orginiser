@@ -5,7 +5,7 @@ import random
 import string
 
 db = dataset.connect('sqlite:///DataBase.db')
-i = 1
+#i = 1
 
 #for player in db['Players']:
 #    print(player['id'])
@@ -16,7 +16,7 @@ def addUser(username,passWord):
         'id' : CreateId('Players'),
         'name':username,
         'passWord' : passWord,
-        'team' : None,
+        'team' : '',
         'profilePic' : 'Defult.png'
     }
     db['Players'].insert(userDict)
@@ -35,11 +35,7 @@ def CreateTeam(players,name):
         'id' : teamId,
         'name' : name,
         'mmr' : 2500,
-        'player0' : players[0],
-        'player1' : players[1],
-        'player2' : players[2],
-        'player3' : players[3],
-        'player4' : players[4]
+        'player0' : players[0]
     }
     db['Teams'].insert(teamDict)
     for player in players:
@@ -50,8 +46,10 @@ def CreateTeam(players,name):
         }
         db['Players'].update(p,['id'])
 
-players = ['ikjtjs','rixtun','pejule','qttdwn','lkezyw']
-CreateTeam(players,'test')
+
+if __name__ == '__main__':
+    players = ['ikjtjs','rixtun','pejule','qttdwn','lkezyw']
+    CreateTeam(players,'test')
 #for i in range(5):
 #    addUser(f'User{i}', f'pass{i}')
 

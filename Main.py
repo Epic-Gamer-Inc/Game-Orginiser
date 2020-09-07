@@ -1,4 +1,5 @@
 from Rankings import *
+from Database import *
 from flask import *
 import dataset
 import random
@@ -52,23 +53,6 @@ def login_post():
     else:
         return "Invalid Password"
 
-def addUser(username,passWord):
-    userDict = {
-        'id' : CreateId('Players'),
-        'name':username,
-        'passWord' : passWord,
-        'team' : None,
-        'profilePic' : 'Defult.png'
-    }
-    db['Players'].insert(userDict)
-
-def CreateId(table):
-    length = 6
-    letters = string.ascii_lowercase
-    id = ''.join(random.choice(letters) for i in range(length))
-    while db[table].find_one(id=id):
-        id = ''.join(random.choice(letters) for i in range(length))
-    return id
 
 @app.route('/create_account')
 def create_account_get():
