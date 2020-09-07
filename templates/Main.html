@@ -26,14 +26,4 @@
             <input type="text" name="message">
             <input type="submit">
         </form>
-
-    <h3>Posts:
-    <ul>{% for post in posts %}
-        <li> <img src="{{post['picture']}}" class="profile-image">
-            <a href="/profile?username={{post['username']}}">
-                {{post["username"]}}</a>: {{post["message"]}}
-        </li>
-        {% endfor %}
-    </ul>
-    </h3>
 </div>
