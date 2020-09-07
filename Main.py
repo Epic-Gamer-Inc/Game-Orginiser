@@ -62,6 +62,18 @@ def create_account_post():
     addUser(request.form['makeusername'],request.form['makepassword'])
     return redirect('/login')
 
+@app.route('/create_post', methods=['post'])
+def create_post():
+    post_dictionary = {
+        'message' : request.form['message'],
+        'username' : session['name'],
+        'picture' : session['profilePic']
+    }
+
+    db['posts'].insert(post_dictionary)
+
+    return redirect('/')
+
 @app.route('/profile')
 def profile_get():
     username = request.args['name']
