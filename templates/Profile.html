@@ -1,12 +1,22 @@
 <link rel="stylesheet" href="static/template.css">
-
+<style>
+    .profileImage {
+        width: 200px;
+        
+    }
+</style>
 <h1>{{session['name']}}</h1>
+<div style = 'border: 2px solid black;'>
 <link rel="stylesheet" href="static/template.css">
 <h2 style="padding-bottom:5px;">Set your profile picture:</h2>
-<img src="{{session['profilePic']}}" class="profile-image" >
+<img src="{{session['profilePic']}}" class="profileImage" >
 <h3><form action="/set_picture_post" method="post" enctype="multipart/form-data">
 <input type='file' name="file">
 <input type="submit">
 </form>
 </h3>
+</div>
+<div style = 'border: 2px solid black;'>
+<h2>Your Team: {{session['teamName']}}</h2>
+</div>
 <h2><a href="/">Home Page</a></h2>
