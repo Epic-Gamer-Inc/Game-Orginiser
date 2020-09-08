@@ -6,7 +6,7 @@
     }
 </style>
 <h1>{{session['name']}}</h1>
-<div style = 'border: 2px solid black;'>
+<div style = 'border: 2px solid black;width: max-content;'>
 <link rel="stylesheet" href="static/template.css">
 <h2 style="padding-bottom:5px;">Set your profile picture:</h2>
 <img src="{{session['profilePic']}}" class="profileImage" >
@@ -16,7 +16,18 @@
 </form>
 </h3>
 </div>
-<div style = 'border: 2px solid black;'>
+<br>
+<div style = 'border: 2px solid black;width: max-content;'>
 <h2>Your Team: {{session['teamName']}}</h2>
+<h3>
+    Rank: {{session['teamRank']}}
+    <br>
+    <br>
+    Members:
+<ul> {% for member in session['teamMembers'] %}
+       <li>{{member}}</li>
+       {% endfor %}
+   </ul>
+</h3>
 </div>
 <h2><a href="/">Home Page</a></h2>
