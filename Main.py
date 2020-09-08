@@ -29,6 +29,7 @@ def login_post():
         session['name'] = request.form['username']
         session['id'] = db_user['id']
         session['profilePic'] = db_user['profilePic']
+        session['teamName'] = getTeamName(db_user['team'])
         return redirect('/')
     else:
         return "Invalid Password"

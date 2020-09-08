@@ -9,7 +9,8 @@
 <div style = 'border: 2px solid black;'>
 {% if 'name' in session %}
 
-<h3 style="display:inline" ><img src="{{session['profilePic']}}" class="profile-image" ><a href="/profile">{{session['name']}}</a></h3>
+<h3 style="display:inline" ><img src="{{session['profilePic']}}" class="profile-image" >
+    <a href="/profile">{{session['name']}}#{{session['id']}}</a></h3>
 </div>
 <h1>The eSports Orgainser</h1>
 <div class = 'main'>

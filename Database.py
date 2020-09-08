@@ -12,7 +12,7 @@ def addUser(username,passWord):
         'name':username,
         'passWord' : passWord,
         'team' : '',
-        'profilePic' : 'Defult.png'
+        'profilePic' : 'static/uploads/Defult.png'
     }
     db['Players'].insert(userDict)
 
@@ -68,7 +68,10 @@ def GetFullName(id):
     return f'{name}#{id}'
 
 def getTeamName(id):
-    return db['Teams'].find_one(id)['name']
+    id = str(id)
+    j = db['Teams'].find_one(id)
+    name = j['name']
+    return name
 
 if __name__ == '__main__':
     print(CreateId('Players'))
