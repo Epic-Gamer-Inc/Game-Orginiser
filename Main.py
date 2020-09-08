@@ -80,7 +80,6 @@ def create_team_post():
     player3 = player3[1]
     player4 = request.form['P4'].split('#')
     player4 = player4[1]
-
     members.append(session['id'])
     members.append(player1)
     members.append(player2)
