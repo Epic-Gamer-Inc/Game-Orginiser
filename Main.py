@@ -20,6 +20,20 @@ def main_get():
 def login_get():
     return render_template('Login.html')
 
+@app.route('/login_post', methods=['post'])
+def login_post():
+    db_user = db['Players'].find_one(name=request.form['username'])
+    db_password = str(db_user['passWord'])
+    typed_password = request.form['password']
+    if db_password == typed_password:
+        session['name'] = request.form['username']
+        session['id'] = db_user['id']
+        session['profilePic'] = db_user['profilePic']
+        return redirect('/')
+    else:
+        return "Invalid Password"
+
+
 @app.route('/set_picture')
 def set_picutre_get():
     return render_template('setpicture.html')
@@ -38,20 +52,6 @@ def logout_get():
     del session['name']
     return redirect('/')
 
-@app.route('/login_post', methods=['post'])
-def login_post():
-    db_user = db['Players'].find_one(name=request.form['username'])
-    db_password = str(db_user['passWord'])
-    typed_password = request.form['password']
-    if db_password == typed_password:
-        session['name'] = request.form['username']
-        session['id'] = db_user['id']
-        session['profilePic'] = db_user['profilePic']
-        return redirect('/')
-    else:
-        return "Invalid Password"
-
-
 @app.route('/create_account')
 def create_account_get():
     return render_template('create_account.html')
@@ -63,7 +63,21 @@ def create_account_post():
 
 @app.route('/profile')
 def profile_get():
-
     return render_template('Profile.html', filtered_posts='')
+
+@app.route('/create_team')
+def create_team():
+    return render_template('create_team.html')
+
+@app.route('/create_team_post', methods=['post'])
+def create_team_post():
+    members = []
+    members.append(session['id'])
+    members.append(request.form['P1'])
+    members.append(request.form['P2'])
+    members.append(request.form['P3'])
+    members.append(request.form['P4'])
+    CreateTeam(members, request.form['teamName'])
+    return redirect('/')
 
 app.run(debug=True)
