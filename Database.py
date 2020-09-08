@@ -63,10 +63,13 @@ def updateRanks(new,teamId):
         }
     db['Teams'].update(p,['id'])
 
-def GetFullName(id):
-    i = db['Players'].find_one(id)
+def GetFullName(iden):
+    print(iden)
+    i = db['Players'].find_one(text(iden))
+    print(i)
     name =  i['name']
-    return f'{name}#{id}'
+    print(name, iden)
+    return f'{name}#{iden}'
 
 def getTeamName(id):
     j = db['Teams'].find_one(text(id))

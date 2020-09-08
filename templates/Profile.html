@@ -16,7 +16,18 @@
 </form>
 </h3>
 </div>
+<br>
 <div style = 'border: 2px solid black;'>
 <h2>Your Team: {{session['teamName']}}</h2>
+<h3>
+    Rank: {{session['teamRank']}}
+    <br>
+    <br>
+    Members:
+<ul> {% for member in session['teamMembers'] %}
+       <li>{{member}}</li>
+       {% endfor %}
+   </ul>
+</h3>
 </div>
 <h2><a href="/">Home Page</a></h2>

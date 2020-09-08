@@ -4,6 +4,7 @@ from flask import *
 import dataset
 import random
 import string
+from sqlalchemy.sql import text
 
 app = Flask(__name__)
 db = dataset.connect('sqlite:///DataBase.db')
@@ -29,7 +30,6 @@ def login_post():
         session['name'] = request.form['username']
         session['id'] = db_user['id']
         session['profilePic'] = db_user['profilePic']
-        session['teamName'] = getTeamName(db_user['team'])
         return redirect('/')
     else:
         return "Invalid Password"
@@ -87,6 +87,11 @@ def create_team_post():
     members.append(player3)
     members.append(player4)
     CreateTeam(members, request.form['teamName'])
+    db_user = db['Players'].find_one(name=session['name'])
+    session['teamName'] = getTeamName(db_user['team'])
+    db_team = db['Teams'].find_one(id=db_user['team'])
+    session['teamMembers'] = list([GetFullName(db_team['player0']),GetFullName(db_team['player1']),GetFullName(db_team['player2']),GetFullName(db_team['player3']),GetFullName(db_team['player4'])])
+    session['teamRank'] = catagorise(db_team['mmr'])
     return redirect('/')
 
 app.run(debug=True)
