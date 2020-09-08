@@ -72,11 +72,20 @@ def create_team():
 @app.route('/create_team_post', methods=['post'])
 def create_team_post():
     members = []
+    player1 = request.form['P1'].split('#')
+    player1 = player1[1]
+    player2 = request.form['P2'].split('#')
+    player2 = player2[1]
+    player3 = request.form['P3'].split('#')
+    player3 = player3[1]
+    player4 = request.form['P4'].split('#')
+    player4 = player4[1]
+
     members.append(session['id'])
-    members.append(request.form['P1'])
-    members.append(request.form['P2'])
-    members.append(request.form['P3'])
-    members.append(request.form['P4'])
+    members.append(player1)
+    members.append(player2)
+    members.append(player3)
+    members.append(player4)
     CreateTeam(members, request.form['teamName'])
     return redirect('/')
 
