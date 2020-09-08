@@ -69,7 +69,6 @@ def GetFullName(id):
 
 def GetTeamName(id):
     i = db['Teams'].find_one(id = id)
-    print(i)
     return i['name']
 
 if __name__ == '__main__':
