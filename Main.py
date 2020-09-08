@@ -64,6 +64,11 @@ def create_account_post():
 
 @app.route('/profile')
 def profile_get():
+    db_user = db['Players'].find_one(name=session['name'])
+    session['teamName'] = getTeamName(db_user['team'])
+    db_team = db['Teams'].find_one(id=db_user['team'])
+    session['teamMembers'] = list([GetFullName(db_team['player0']),GetFullName(db_team['player1']),GetFullName(db_team['player2']),GetFullName(db_team['player3']),GetFullName(db_team['player4'])])
+    session['teamRank'] = catagorise(db_team['mmr'])
     return render_template('Profile.html', filtered_posts='')
 
 @app.route('/create_team')

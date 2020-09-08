@@ -6,7 +6,7 @@
     
 }
 </style>
-<div style = 'border: 2px solid black;'>
+<div style = 'border: 2px solid black;width: max-content;'>
 {% if 'name' in session %}
 
 <h3 style="display:inline" ><img src="{{session['profilePic']}}" class="profile-image" >
@@ -20,4 +20,7 @@
     <a href="/login">
         Log In</a>
     {% endif %}
+
+    {% if 'teamName' not in session %}
     <a href="/create_team">Create a Team</a>
+    {% endif %}
