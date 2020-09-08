@@ -30,6 +30,7 @@ def CreateTeam(players,name):
         'id' : teamId,
         'name' : name,
         'mmr' : 2500,
+        'sigma' : 8.333333333333334,
         'player0' : players[0],
         'player1' : players[1],
         'player2' : players[2],
@@ -54,5 +55,11 @@ def upDatePfp(imageName,user):
         }
     db['Players'].update(p,['id'])
 
+def updateRanks(new,teamId):
+    p = {
+            'id' : teamId,
+            'mmr' : new
+        }
+    db['Teams'].update(p,['id'])
 if __name__ == '__main__':
     pass

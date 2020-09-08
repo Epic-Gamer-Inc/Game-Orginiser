@@ -52,8 +52,6 @@ def makeMatches(players,playerRanks): #creates matches out of an list/dictionary
                 matches.append(bestMatch)
                 usedPlayers.append(bestMatch[1])
             else:
-                print(bestMatch)
-                print('='*10)
                 queue.append(bestMatch)
     return matches, queue
 
@@ -67,9 +65,24 @@ def catagorise(mmr): #returns the name of the rank based off mmr
     except:
         return 'Undefined'
 
+def run1v1(winner, looser, draw):
+    w = Rating(winner[0],winner[1])
+    l = Rating(looser[0],looser[1])
+    rw,rl = rate_1vs1(w,l,draw)
+    w = (rw.mu,rw.sigma)
+    l = (rl.mu,rl.sigma)
+    return w,l
+
 if __name__ == "__main__":
+    '''
     _playerRanks = {}
     _players = []
     _playerRanks,_players = FillFile()
     print(makeMatches(_players,_playerRanks))
     print(catagorise(3300))
+    '''
+    winner = (2500,8.333333333333334)
+    looser = (2600,8.333333333333334)
+    print(run1v1(winner,looser,False))
+    
+    print(Rating(2500).sigma)

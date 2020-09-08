@@ -29,7 +29,8 @@ def set_picutre_post():
     file = request.files['file']
     filename_to_save = 'static/uploads/' + file.filename
     file.save(filename_to_save)
-    upDatePfp(filename_to_save, session['id'])
+    session['profilePic'] = upDatePfp(filename_to_save, session['id'])
+
     return redirect("/")
 
 @app.route('/logout')
@@ -45,6 +46,7 @@ def login_post():
     if db_password == typed_password:
         session['name'] = request.form['username']
         session['id'] = db_user['id']
+        session['profilePic'] = db_user['profilePic']
         return redirect('/')
     else:
         return "Invalid Password"
@@ -61,8 +63,7 @@ def create_account_post():
 
 @app.route('/profile')
 def profile_get():
-    username = request.args['name']
-    filtered_posts = []
-    return render_template('Profile.html', filtered_posts=filtered_posts)
+
+    return render_template('Profile.html', filtered_posts='')
 
 app.run(debug=True)
