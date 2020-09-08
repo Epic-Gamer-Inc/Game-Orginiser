@@ -29,7 +29,8 @@ def set_picutre_post():
     file = request.files['file']
     filename_to_save = 'static/uploads/' + file.filename
     file.save(filename_to_save)
-    upDatePfp(filename_to_save, session['id'])
+    session['profilePic'] = upDatePfp(filename_to_save, session['id'])
+
     return redirect("/")
 
 @app.route('/logout')
