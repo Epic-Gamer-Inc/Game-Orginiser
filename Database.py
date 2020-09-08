@@ -3,6 +3,7 @@ from time import sleep
 import dataset
 import random
 import string
+from sqlalchemy.sql import text
 
 db = dataset.connect('sqlite:///DataBase.db')
 
@@ -68,8 +69,7 @@ def GetFullName(id):
     return f'{name}#{id}'
 
 def getTeamName(id):
-    id = str(id)
-    j = db['Teams'].find_one(id)
+    j = db['Teams'].find_one(text(id))
     name = j['name']
     return name
 
