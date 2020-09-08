@@ -17,8 +17,8 @@ def addUser(username,passWord):
     db['Players'].insert(userDict)
 
 def CreateId(table):
-    length = 6
-    letters = string.ascii_lowercase
+    length = 4
+    letters = string.digits
     id = ''.join(random.choice(letters) for i in range(length))
     while db[table].find_one(id=id):
         id = ''.join(random.choice(letters) for i in range(length))
@@ -62,4 +62,4 @@ def updateRanks(new,teamId):
         }
     db['Teams'].update(p,['id'])
 if __name__ == '__main__':
-    pass
+    print(CreateId('Players'))
