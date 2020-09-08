@@ -73,5 +73,5 @@ def GetTeamName(id):
 
 if __name__ == '__main__':
     print(CreateId('Players'))
-    print(GetFullName('gsbxvm'))
-    print(GetTeamName('tlpgel'))
+    print(GetFullName('8040'))
+    print(GetTeamName('2399'))
