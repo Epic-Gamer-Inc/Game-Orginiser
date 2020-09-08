@@ -8,7 +8,8 @@
 </style>
 <div style = 'border: 2px solid black;'>
 {% if 'name' in session %}
-<img src="{{session['profilePic']}}" class="profile-image" ><h3 style="display:inline">{{session['name']}}</h3>
+
+<h3 style="display:inline" ><img src="{{session['profilePic']}}" class="profile-image" ><a href="/profile">{{session['name']}}</a></h3>
 </div>
 <h1>The eSports Orgainser</h1>
 <div class = 'main'>
@@ -18,12 +19,3 @@
     <a href="/login">
         Log In</a>
     {% endif %}
-
-    <a href="/set_picture">Set Profile Picture</a>
-    <h3>Input Post:</h3>
-    
-        <form action="/create_post" method="post">
-            <input type="text" name="message">
-            <input type="submit">
-        </form>
-</div>
