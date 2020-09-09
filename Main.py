@@ -65,7 +65,7 @@ def create_account_post():
 @app.route('/profile')
 def profile_get():
     db_user = db['Players'].find_one(name=session['name'])
-    session['teamName'] = getTeamName(db_user['team'])
+    session['teamName'] = GetTeamName(db_user['team'])
     db_team = db['Teams'].find_one(id=db_user['team'])
     session['teamMembers'] = list([GetFullName(db_team['player0']),GetFullName(db_team['player1']),GetFullName(db_team['player2']),GetFullName(db_team['player3']),GetFullName(db_team['player4'])])
     session['teamRank'] = catagorise(db_team['mmr'])
@@ -93,7 +93,7 @@ def create_team_post():
     members.append(player4)
     CreateTeam(members, request.form['teamName'])
     db_user = db['Players'].find_one(name=session['name'])
-    session['teamName'] = getTeamName(db_user['team'])
+    session['teamName'] = GetTeamName(db_user['team'])
     db_team = db['Teams'].find_one(id=db_user['team'])
     session['teamMembers'] = list([GetFullName(db_team['player0']),GetFullName(db_team['player1']),GetFullName(db_team['player2']),GetFullName(db_team['player3']),GetFullName(db_team['player4'])])
     session['teamRank'] = catagorise(db_team['mmr'])
