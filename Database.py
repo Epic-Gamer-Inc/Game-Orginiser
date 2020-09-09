@@ -12,7 +12,7 @@ def addUser(username,passWord):
         'name':username,
         'passWord' : passWord,
         'team' : '',
-        'profilePic' : 'Defult.png'
+        'profilePic' : 'static/uploads/Defult.png'
     }
     db['Players'].insert(userDict)
 
