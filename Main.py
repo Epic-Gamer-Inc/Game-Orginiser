@@ -23,16 +23,19 @@ def login_get():
 
 @app.route('/login_post', methods=['post'])
 def login_post():
-    db_user = db['Players'].find_one(name=request.form['username'])
-    db_password = str(db_user['passWord'])
-    typed_password = request.form['password']
-    if db_password == typed_password:
-        session['name'] = request.form['username']
-        session['id'] = db_user['id']
-        session['profilePic'] = db_user['profilePic']
-        return redirect('/')
-    else:
-        return "Invalid Password"
+    try: 
+        db_user = db['Players'].find_one(name=request.form['username'])
+        db_password = str(db_user['passWord'])
+        typed_password = request.form['password']
+        if db_password == typed_password:
+            session['name'] = request.form['username']
+            session['id'] = db_user['id']
+            session['profilePic'] = db_user['profilePic']
+            return redirect('/')
+        else:
+            return render_template('LoginFalse.html')
+    except:
+        return render_template('LoginFalse.html')
 
 
 @app.route('/set_picture')
@@ -65,11 +68,16 @@ def create_account_post():
 @app.route('/profile')
 def profile_get():
     db_user = db['Players'].find_one(name=session['name'])
-    session['teamName'] = getTeamName(db_user['team'])
-    db_team = db['Teams'].find_one(id=db_user['team'])
-    session['teamMembers'] = list([GetFullName(db_team['player0']),GetFullName(db_team['player1']),GetFullName(db_team['player2']),GetFullName(db_team['player3']),GetFullName(db_team['player4'])])
-    session['teamRank'] = catagorise(db_team['mmr'])
-    return render_template('Profile.html', filtered_posts='')
+    try:
+        session['teamName'] = GetTeamName(db_user['team'])
+        db_team = db['Teams'].find_one(id=db_user['team'])
+        session['teamMembers'] = list([GetFullName(db_team['player0']),GetFullName(db_team['player1']),GetFullName(db_team['player2']),GetFullName(db_team['player3']),GetFullName(db_team['player4'])])
+        session['teamRank'] = catagorise(db_team['mmr'])
+        displayteam = True
+        return render_template('Profile.html', displayteam=displayteam)
+    except:
+        displayteam = False
+        return render_template('Profile.html', displayteam=displayteam)
 
 @app.route('/create_team')
 def create_team():
