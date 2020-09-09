@@ -63,15 +63,35 @@ def updateRanks(new,teamId):
     db['Teams'].update(p,['id'])
 
 def GetFullName(id):
-    i = db['Players'].find_one(id = id)
-    name =  i['name']
-    return f'{name}#{id}'
+    try:    
+        i = db['Players'].find_one(id = id)
+        name =  i['name']
+        return f'{name}#{id}'
+    except:
+        return 'error bad id'
 
 def GetTeamName(id):
-    i = db['Teams'].find_one(id = id)
-    return i['name']
+    try:
+        i = db['Teams'].find_one(id = id)
+        return i['name']
+    except: 
+        return 'error bad id'
+
+def GetQueue():
+    queue = []
+    queueRanks = {}
+    i = list(db['Queue'])
+    #print(i)
+    for c in i:
+        #print(c)
+        team = db['Teams'].find_one(id = c['team'])
+        if c['inQueue']:
+            queue.append(team['name'])
+            queueRanks[team['name']] = team['mmr']
+    return queue, queueRanks
 
 if __name__ == '__main__':
-    print(CreateId('Players'))
-    print(GetFullName('8040'))
-    print(GetTeamName('2399'))
+    #print(CreateId('Players'))
+    #print(GetFullName('8040'))
+    #print(GetTeamName('2399'))
+    print(GetQueue())
