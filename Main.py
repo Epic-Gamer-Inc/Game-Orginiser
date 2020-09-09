@@ -76,6 +76,8 @@ def profile_get():
         displayteam = True
         return render_template('Profile.html', displayteam=displayteam)
     except:
+        if 'teamName' in session:
+            del session['teamName']
         displayteam = False
         return render_template('Profile.html', displayteam=displayteam)
 
