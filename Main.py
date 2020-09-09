@@ -112,4 +112,8 @@ def create_team_post():
     except:
         return render_template('create_teamFalse.html')
 
+@app.route('/find_match')
+def find_match():
+    return 
+    
 app.run(debug=True)
