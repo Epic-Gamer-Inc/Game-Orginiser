@@ -15,7 +15,8 @@ app.secret_key = "kdJHGksdhjgldGHALKDJGHjg;98723048"
 def main_get():
     if 'name' not in session:
         return redirect('/login')
-    return render_template("Main.html", posts=db['posts'])
+    player = db['Players'].find_one(name=session['name'])
+    return render_template("Main.html", posts=db['posts'], player=player)
 
 @app.route('/login')
 def login_get():
@@ -38,7 +39,6 @@ def login_post():
     except:
         flash('Invalid Username')
         return redirect('/login')
-
 
 @app.route('/set_picture')
 def set_picutre_get():
@@ -119,7 +119,7 @@ def create_team_post():
 
 @app.route('/find_match')
 def find_match():
-    
-    return render_template('find_game.html')
+    player = db['Players'].find_one(name=session['name'])
+    return render_template('find_game.html', player=player, team=team)
     
 app.run(debug=True)

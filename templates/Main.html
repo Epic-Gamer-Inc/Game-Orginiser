@@ -23,7 +23,9 @@
         Log In</a>
     {% endif %}
 
-    {% if 'teamName' not in session %}
+    {% if player['team'] %}
+    <a href="/find_match" class="fatlink">Find a Game</a>
+    {% else %}
     <a href="/create_team" class="fatlink">Create a Team</a>
     {% endif %}
-    <a href="/find_match" class="fatlink">Find a Game</a>
+    
