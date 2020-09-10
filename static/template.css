@@ -32,8 +32,12 @@ a{
   border-radius: 20px;
 
   display: inline-block;
+}
+
+.fatlink {
   margin: 50px;
 }
+
 div.main {
   margin: auto;
   width: 75%;

@@ -8,3 +8,15 @@ Password: <input type='password' name="password">
 </form>
 
 <a href='/create_account'>Create an Account</a>
+
+<h2>
+    {% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <ul class=flashes>
+    {% for message in messages %}
+      {{ message }}
+    {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
+</h2>

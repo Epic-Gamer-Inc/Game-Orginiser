@@ -33,9 +33,11 @@ def login_post():
             session['profilePic'] = db_user['profilePic']
             return redirect('/')
         else:
-            return render_template('LoginFalse.html')
+            flash('Incorrect Password')
+            return redirect('/login')
     except:
-        return render_template('LoginFalse.html')
+        flash('Invalid Username')
+        return redirect('/login')
 
 
 @app.route('/set_picture')
@@ -47,13 +49,15 @@ def set_picutre_post():
     file = request.files['file']
     filename_to_save = 'static/uploads/' + file.filename
     file.save(filename_to_save)
-    session['profilePic'] = upDatePfp(filename_to_save, session['id'])
+    session['profilePic'] = filename_to_save
+    
+    upDatePfp(filename_to_save, session['id'])
 
     return redirect("/")
 
 @app.route('/logout')
 def logout_get():
-    del session['name']
+    session.clear()
     return redirect('/')
 
 @app.route('/create_account')
@@ -104,16 +108,18 @@ def create_team_post():
         members.append(player4)
         CreateTeam(members, request.form['teamName'])
         db_user = db['Players'].find_one(name=session['name'])
-        session['teamName'] = getTeamName(db_user['team'])
+        session['teamName'] = GetTeamName(db_user['team'])
         db_team = db['Teams'].find_one(id=db_user['team'])
         session['teamMembers'] = list([GetFullName(db_team['player0']),GetFullName(db_team['player1']),GetFullName(db_team['player2']),GetFullName(db_team['player3']),GetFullName(db_team['player4'])])
         session['teamRank'] = catagorise(db_team['mmr'])
         return redirect('/')
     except:
-        return render_template('create_teamFalse.html')
+        flash('Invalid Users Entered')
+        return render_template('create_team.html')
 
 @app.route('/find_match')
 def find_match():
-    return 
+    
+    return render_template('find_game.html')
     
 app.run(debug=True)

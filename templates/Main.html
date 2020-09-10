@@ -3,22 +3,27 @@
 <style>
 .profile-image {
     width: 50px;
-    
+    vertical-align:middle;
 }
 </style>
 {% if 'name' in session %}
 
 <h3 style="display:inline" >
-    <a href="/profile"><img src="{{session['profilePic']}}" class="profile-image" >{{session['name']}}#{{session['id']}}</a></h3>
+    <a href="/profile">
+        <img src="{{session['profilePic']}}" class="profile-image" >
+        {{session['name']}}#{{session['id']}}
+    </a>
+</h3>
 <h1>The eSports Orgainser</h1>
 <div class = 'main'>
-    <a href="/logout">
+    <a href="/logout" class="fatlink">
         Log Out</a>
     {% else %}
-    <a href="/login">
+    <a href="/login" class="fatlink">
         Log In</a>
     {% endif %}
 
     {% if 'teamName' not in session %}
-    <a href="/create_team">Create a Team</a>
+    <a href="/create_team" class="fatlink">Create a Team</a>
     {% endif %}
+    <a href="/find_match" class="fatlink">Find a Game</a>
