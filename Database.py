@@ -80,18 +80,27 @@ def GetTeamName(id):
 def GetQueue():
     queue = []
     queueRanks = {}
-    i = list(db['Queue'])
+    i = db['Queue']
     #print(i)
     for c in i:
         #print(c)
         team = db['Teams'].find_one(id = c['team'])
-        if c['inQueue']:
-            queue.append(team['name'])
-            queueRanks[team['name']] = team['mmr']
+        queue.append(team['name'])
+        queueRanks[team['name']] = team['mmr']
+        i.delete(id = c['id'])
     return queue, queueRanks
+
+def joinQueue(teamId):
+    queue = db['Queue']
+    dic = {
+        'team' : teamId
+    }
+    queue.insert(dic)
+
 
 if __name__ == '__main__':
     #print(CreateId('Players'))
     #print(GetFullName('8040'))
     #print(GetTeamName('2399'))
-    print(GetQueue())
+    joinQueue(CreateId('Players'))
+    #print(GetQueue())
