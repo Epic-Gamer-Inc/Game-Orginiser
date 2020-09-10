@@ -120,6 +120,10 @@ def create_team_post():
 @app.route('/find_match')
 def find_match():
     player = db['Players'].find_one(name=session['name'])
-    return render_template('find_game.html', player=player, team=team)
+    teamid = player['team']
+    team = db['Teams'].find_one(id=teamid)
+    mmr = catagorise(team['mmr'])
+    membersList = list([GetFullName(team['player0']),GetFullName(team['player1']),GetFullName(team['player2']),GetFullName(team['player3']),GetFullName(team['player4'])])
+    return render_template('find_game.html', player=player, team=team,mmr=mmr, membersList=membersList)
     
 app.run(debug=True)
