@@ -97,10 +97,23 @@ def joinQueue(teamId):
     }
     queue.insert(dic)
 
+def leaveQueue(teamId):
+    db['Queue'].delete(team=teamId)
+
+def addMatches(matches):
+    matchDb = db['Matches']
+    for match in matches:
+        dic = {
+            'team1': match[0],
+            'team2': match[1]
+        }
+        matchDb.insert(dic)
 
 if __name__ == '__main__':
     #print(CreateId('Players'))
     #print(GetFullName('8040'))
     #print(GetTeamName('2399'))
-    joinQueue(CreateId('Players'))
+    #joinQueue(CreateId('Players'))
+    #leaveQueue('12345')
     #print(GetQueue())
+    pass
