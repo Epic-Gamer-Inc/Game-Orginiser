@@ -1,0 +1,11 @@
+<link rel="stylesheet" href="static/template.css">
+<h1>You Are Queing For A Game!</h1>
+Rank: {{mmr}}
+    <br>
+    <br>
+    Members:
+<ul> {% for member in membersList %}
+       <li>{{member}}</li>
+       {% endfor %}
+<br>
+<a href="/">Home Page</a>

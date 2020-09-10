@@ -15,7 +15,8 @@ app.secret_key = "kdJHGksdhjgldGHALKDJGHjg;98723048"
 def main_get():
     if 'name' not in session:
         return redirect('/login')
-    return render_template("Main.html", posts=db['posts'])
+    player = db['Players'].find_one(name=session['name'])
+    return render_template("Main.html", posts=db['posts'], player=player)
 
 @app.route('/login')
 def login_get():
@@ -33,10 +34,11 @@ def login_post():
             session['profilePic'] = db_user['profilePic']
             return redirect('/')
         else:
-            return render_template('LoginFalse.html')
+            flash('Incorrect Password')
+            return redirect('/login')
     except:
-        return render_template('LoginFalse.html')
-
+        flash('Invalid Username')
+        return redirect('/login')
 
 @app.route('/set_picture')
 def set_picutre_get():
@@ -47,13 +49,15 @@ def set_picutre_post():
     file = request.files['file']
     filename_to_save = 'static/uploads/' + file.filename
     file.save(filename_to_save)
-    session['profilePic'] = upDatePfp(filename_to_save, session['id'])
+    session['profilePic'] = filename_to_save
+    
+    upDatePfp(filename_to_save, session['id'])
 
     return redirect("/")
 
 @app.route('/logout')
 def logout_get():
-    del session['name']
+    session.clear()
     return redirect('/')
 
 @app.route('/create_account')
@@ -104,16 +108,22 @@ def create_team_post():
         members.append(player4)
         CreateTeam(members, request.form['teamName'])
         db_user = db['Players'].find_one(name=session['name'])
-        session['teamName'] = getTeamName(db_user['team'])
+        session['teamName'] = GetTeamName(db_user['team'])
         db_team = db['Teams'].find_one(id=db_user['team'])
         session['teamMembers'] = list([GetFullName(db_team['player0']),GetFullName(db_team['player1']),GetFullName(db_team['player2']),GetFullName(db_team['player3']),GetFullName(db_team['player4'])])
         session['teamRank'] = catagorise(db_team['mmr'])
         return redirect('/')
     except:
-        return render_template('create_teamFalse.html')
+        flash('Invalid Users Entered')
+        return render_template('create_team.html')
 
 @app.route('/find_match')
 def find_match():
-    return 
+    player = db['Players'].find_one(name=session['name'])
+    teamid = player['team']
+    team = db['Teams'].find_one(id=teamid)
+    mmr = catagorise(team['mmr'])
+    membersList = list([GetFullName(team['player0']),GetFullName(team['player1']),GetFullName(team['player2']),GetFullName(team['player3']),GetFullName(team['player4'])])
+    return render_template('find_game.html', player=player, team=team,mmr=mmr, membersList=membersList)
     
 app.run(debug=True)
