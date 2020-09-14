@@ -21,7 +21,7 @@
 <div style = 'border: 2px solid black;width: max-content;'>
 <h2>Your Team: {{session['teamName']}}</h2>
 <h3>
-    Rank: {{session['teamRank']}}
+    Rank: <img src="/static/ranks/{{session['teamRank']}}.png" class="profile-image"> {{session['teamRank']}}
     <br>
     <br>
     Members:
