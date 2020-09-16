@@ -135,9 +135,19 @@ def find_match():
 @app.route('/results')
 def result():
     return render_template('results.html')
+    
 @app.route('/results_post')
 def results_post():
     score1 = request.form['score1']
     score2 = request.form['score2']
+    if score1 > score2:
+        #run1v1(winner, looser, False)
+        pass
+    elif score1 < score2:
+        #run1v1(winner, looser, False)
+        pass
+    else:
+        #run1v1(winner, looser, True)
+        pass
     return redirect('/')
 app.run(debug=True)
