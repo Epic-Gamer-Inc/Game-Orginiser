@@ -1,6 +1,13 @@
 <link rel="stylesheet" href="static/template.css">
+<style>
+.profile-image {
+    width: 50px;
+    vertical-align:middle;
+}
+</style>
 <h1>You Are Queing For A Game!</h1>
-Rank: {{mmr}}
+
+Rank: <img src="/static/ranks/{{mmr}}.png" class="profile-image"> {{mmr}}
     <br>
     <br>
     Members:

@@ -64,7 +64,7 @@ def catagorise(mmr): #returns the name of the rank based off mmr
             for line in f:
                 line = line.split()
                 if mmr < int(line[1]):
-                    return f'{line[0][:-1]} {line[0][-1]}'
+                    return f'{line[0][:-1]}{line[0][-1]}'
     except:
         return 'Undefined'
 
