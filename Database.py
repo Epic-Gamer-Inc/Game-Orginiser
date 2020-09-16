@@ -80,14 +80,16 @@ def GetTeamName(id):
 def GetQueue():
     queue = []
     queueRanks = {}
-    i = db['Queue']
+    queue_rows = db['Queue']
     #print(i)
-    for c in i:
+    for queue_item in queue_rows:
         #print(c)
-        team = db['Teams'].find_one(id = c['team'])
+        team = db['Teams'].find_one(id = str(queue_item['team']))
+        if team is None:
+            raise Exception("There is no team with an id of", queue_item['team'])
         queue.append(team['name'])
         queueRanks[team['name']] = team['mmr']
-        i.delete(id = c['id'])
+        queue_rows.delete(id = queue_item['id'])
     return queue, queueRanks
 
 def joinQueue(teamId):

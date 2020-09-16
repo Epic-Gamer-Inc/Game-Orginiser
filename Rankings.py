@@ -32,6 +32,7 @@ def FillFile(): #use to fill a json file for testing porposes
 def makeMatches(players,playerRanks): #creates matches out of an list/dictionary based off of rank will return [] if len(players) is not even
     matches = []
     queue = []
+    queueRanks = {}
     usedPlayers = []
     for p1 in players:
         if p1 not in usedPlayers:
@@ -53,7 +54,9 @@ def makeMatches(players,playerRanks): #creates matches out of an list/dictionary
                 usedPlayers.append(bestMatch[1])
             else:
                 queue.append(bestMatch)
-    return matches, queue
+                queueRanks[bestMatch] = playerRanks[bestMatch]
+    print(queueRanks)
+    return matches, queue, queueRanks
 
 def catagorise(mmr): #returns the name of the rank based off mmr
     try:
