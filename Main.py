@@ -124,7 +124,7 @@ def find_match():
     team = db['Teams'].find_one(id=teamid)
     mmr = catagorise(team['mmr'])
     membersList = list([GetFullName(team['player0']),GetFullName(team['player1']),GetFullName(team['player2']),GetFullName(team['player3']),GetFullName(team['player4'])])
-    #joinQueue(teamid)
+    joinQueue(teamid)
     return render_template('find_game.html', player=player, team=team,mmr=mmr, membersList=membersList)
     
 app.run(debug=True)
