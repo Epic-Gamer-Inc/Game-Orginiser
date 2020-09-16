@@ -124,7 +124,16 @@ def find_match():
     team = db['Teams'].find_one(id=teamid)
     mmr = catagorise(team['mmr'])
     membersList = list([GetFullName(team['player0']),GetFullName(team['player1']),GetFullName(team['player2']),GetFullName(team['player3']),GetFullName(team['player4'])])
-    joinQueue(teamid)
+    if db['Queue'].find_one(team=teamid) == None:
+        joinQueue(teamid)
+    if db['Matches'].find_one(team1=teamid):
+        return redirect('/results')
+    elif db['Matches'].find_one(team2=teamid):
+        return redirect('/results')
     return render_template('find_game.html', player=player, team=team,mmr=mmr, membersList=membersList)
-    
+
+@app.route('/results')
+def result():
+    score1 = request.form['score1']
+    score2 = request.form['score2']
 app.run(debug=True)
