@@ -55,10 +55,11 @@ def upDatePfp(imageName,user):
         }
     db['Players'].update(p,['id'])
 
-def updateRanks(new,teamId):
+def updateRanks(newMmr, newSigma, teamId):
     p = {
             'id' : teamId,
-            'mmr' : new
+            'mmr' : newMmr,
+            'sigma' : newSigma
         }
     db['Teams'].update(p,['id'])
 
@@ -87,8 +88,8 @@ def GetQueue():
         team = db['Teams'].find_one(id = str(queue_item['team']))
         if team is None:
             raise Exception("There is no team with an id of", queue_item['team'])
-        queue.append(team['name'])
-        queueRanks[team['name']] = team['mmr']
+        queue.append(team['id'])
+        queueRanks[team['id']] = team['mmr']
         queue_rows.delete(id = queue_item['id'])
     return queue, queueRanks
 
