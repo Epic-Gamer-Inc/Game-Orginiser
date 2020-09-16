@@ -34,7 +34,7 @@ def CreateTeam(players,name):
     teamDict = {
         'id' : teamId,
         'name' : name,
-        'mmr' : 2500,
+        'mmr' : random.randrange(2000,3000),
         'sigma' : 8.333333333333334,
         'player0' : players[0],
         'player1' : players[1],
@@ -117,6 +117,19 @@ def addMatches(matches):
         }
         matchDb.insert(dic)
 
+
+def Do1v1(winId,looseId,draw):
+    teamDb = db['Teams']
+    wTeam = teamDb.find_one(id = winId)
+    lTeam = teamDb.find_one(id = looseId)
+    wRank = (wTeam['mmr'],wTeam['sigma'])
+    lRank = (lTeam['mmr'],lTeam['sigma'])
+    thing = run1v1(wRank,lRank,draw)
+    updateRanks(thing[0][0],thing[0][1],winId)
+    updateRanks(thing[1][0],thing[1][1],looseId)
+
+
+
 if __name__ == '__main__':
     #print(CreateId('Players'))
     #print(GetFullName('8040'))
@@ -124,4 +137,5 @@ if __name__ == '__main__':
     #joinQueue(CreateId('Players'))
     #leaveQueue('12345')
     #print(GetQueue())
+    Do1v1(2399,6228,False)
     pass
