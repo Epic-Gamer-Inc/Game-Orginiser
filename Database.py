@@ -83,6 +83,13 @@ def GetTeamName(id):
     except: 
         return 'error bad id'
 
+def ChangeStatus(status,id):
+    p = {
+            'id' : id,
+            'status' : status
+        }
+    db['Teams'].update(p,['id'])
+
 def GetQueue():
     queue = []
     queueRanks = {}
