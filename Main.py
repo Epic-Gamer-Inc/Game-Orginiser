@@ -147,6 +147,7 @@ def results_post():
     score1 = int(request.form['score1'])
     score2 = int(request.form['score2'])
     match = db['Matches'].find_one(team1=teamid)
+    matchid = match['matchId']
     if not match:
         match = db['Matches'].find_one(team2=teamid)
     if not match:
@@ -155,9 +156,12 @@ def results_post():
 
     if score1 > score2:
         Do1v1(match['team1'], match['team2'], False)
+        RemoveMatches(matchid)
     elif score1 < score2:
         Do1v1(match['team2'], match['team1'], False)
+        RemoveMatches(matchid)
     else:
         Do1v1(match['team1'], match['team2'], True)
+        RemoveMatches(matchid)
     return redirect('/')
 app.run(debug=True)
