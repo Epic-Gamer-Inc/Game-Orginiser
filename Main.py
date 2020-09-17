@@ -125,6 +125,8 @@ def find_match():
     mmr = catagorise(team['mmr'])
     membersList = list([GetFullName(team['player0']),GetFullName(team['player1']),GetFullName(team['player2']),GetFullName(team['player3']),GetFullName(team['player4'])])
     
+    team['status']
+
     if db['Queue'].find_one(team=teamid) == None:
         joinQueue(teamid)
 
