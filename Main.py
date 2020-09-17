@@ -164,11 +164,23 @@ def results_post():
     if score1 > score2:
         Do1v1(match['team1'], match['team2'], False)
         RemoveMatches(matchid)
+        print('')
+        print(match['team1'], match['team2'], False)
+        print('Run')
+        print('')
     elif score1 < score2:
         Do1v1(match['team2'], match['team1'], False)
         RemoveMatches(matchid)
+        print(match['team2'], match['team1'], False)
+        print('')
+        print('Run')
+        print('')
     else:
         Do1v1(match['team1'], match['team2'], True)
         RemoveMatches(matchid)
+        print('')
+        print(match['team1'], match['team2'], True)
+        print('Run')
+        print('')
     return redirect('/')
 app.run(debug=True)
