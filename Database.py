@@ -132,11 +132,11 @@ def Do1v1(winId,looseId,draw):
     teamDb = db['Teams']
     wTeam = teamDb.find_one(id = winId)
     lTeam = teamDb.find_one(id = looseId)
-    wRank = (wTeam['mmr'],wTeam['sigma'])
-    lRank = (lTeam['mmr'],lTeam['sigma'])
+    wRank = (wTeam['mmr']/100,wTeam['sigma'])
+    lRank = (lTeam['mmr']/100,lTeam['sigma'])
     thing = run1v1(wRank,lRank,draw)
-    updateRanks(thing[0][0],thing[0][1],winId)
-    updateRanks(thing[1][0],thing[1][1],looseId)
+    updateRanks(thing[0][0]*100,thing[0][1],winId)
+    updateRanks(thing[1][0]*100,thing[1][1],looseId)
 
 
 
