@@ -126,8 +126,9 @@ def find_match():
     membersList = list([GetFullName(team['player0']),GetFullName(team['player1']),GetFullName(team['player2']),GetFullName(team['player3']),GetFullName(team['player4'])])
     
     if db['Queue'].find_one(team=teamid) == None:
+        print('joining que')
         joinQueue(teamid)
-        
+
     if db['Matches'].find_one(team1=teamid):
         return redirect('/results')
     elif db['Matches'].find_one(team2=teamid):
@@ -139,18 +140,28 @@ def find_match():
 def result():
     return render_template('results.html')
 
-@app.route('/results_post')
+@app.route('/results_post', methods=['post'])
 def results_post():
+    player = db['Players'].find_one(name=session['name'])
+    teamid = player['team']
     score1 = int(request.form['score1'])
     score2 = int(request.form['score2'])
+    match = db['Matches'].find_one(team1=teamid)
+    matchid = match['matchId']
+    if not match:
+        match = db['Matches'].find_one(team2=teamid)
+    if not match:
+        raise Exception("NO MATCH WITH YOUR TEAMID")
+
+
     if score1 > score2:
-        #run1v1(winner, looser, False)
-        pass
+        Do1v1(match['team1'], match['team2'], False)
+        RemoveMatches(matchid)
     elif score1 < score2:
-        #run1v1(winner, looser, False)
-        pass
+        Do1v1(match['team2'], match['team1'], False)
+        RemoveMatches(matchid)
     else:
-        #run1v1(winner, looser, True)
-        pass
+        Do1v1(match['team1'], match['team2'], True)
+        RemoveMatches(matchid)
     return redirect('/')
 app.run(debug=True)
