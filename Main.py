@@ -126,7 +126,6 @@ def find_match():
     membersList = list([GetFullName(team['player0']),GetFullName(team['player1']),GetFullName(team['player2']),GetFullName(team['player3']),GetFullName(team['player4'])])
     
     if db['Queue'].find_one(team=teamid) == None:
-        print('joining que')
         joinQueue(teamid)
 
     if db['Matches'].find_one(team1=teamid):
@@ -152,7 +151,6 @@ def results_post():
         match = db['Matches'].find_one(team2=teamid)
     if not match:
         raise Exception("NO MATCH WITH YOUR TEAMID")
-
 
     if score1 > score2:
         Do1v1(match['team1'], match['team2'], False)
