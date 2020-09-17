@@ -111,6 +111,7 @@ def leaveQueue(teamId):
 def addMatches(matches):
     matchDb = db['Matches']
     for match in matches:
+        
         dic = {
             'team1': match[0],
             'team2': match[1]

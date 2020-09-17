@@ -55,7 +55,7 @@ def makeMatches(players,playerRanks): #creates matches out of an list/dictionary
             else:
                 queue.append(bestMatch)
                 queueRanks[bestMatch] = playerRanks[bestMatch]
-    print(queueRanks)
+    #print(queueRanks)
     return matches, queue, queueRanks
 
 def catagorise(mmr): #returns the name of the rank based off mmr
