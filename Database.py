@@ -117,6 +117,8 @@ def addMatches(matches):
         }
         matchDb.insert(dic)
 
+def RemoveMatches(matchId):
+    db['Matches'].delete(matchId=matchId)
 
 def Do1v1(winId,looseId,draw):
     teamDb = db['Teams']
