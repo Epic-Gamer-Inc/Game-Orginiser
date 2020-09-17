@@ -3,6 +3,11 @@ from time import sleep
 import dataset
 import random
 import string
+import os
+
+abspath = os.path.abspath(__file__)
+dname = os.path.dirname(abspath)
+os.chdir(dname)
 
 db = dataset.connect('sqlite:///DataBase.db')
 

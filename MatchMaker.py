@@ -1,12 +1,15 @@
 from Database import *
 from Rankings import *
 from time import sleep
+from pprint import pprint
 runQueue = True
 
 queue = []
 queueDict = {}
 matches = []
 while runQueue:
+    print('the entire queue is:')
+    pprint(list(db['Queue']))
     gq = GetQueue()
     print(gq)
     print(matches,queue, queueDict)
