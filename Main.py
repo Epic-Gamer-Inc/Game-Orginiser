@@ -127,7 +127,7 @@ def find_match():
     
     if db['Queue'].find_one(team=teamid) == None:
         joinQueue(teamid)
-        
+
     if db['Matches'].find_one(team1=teamid):
         return redirect('/results')
     elif db['Matches'].find_one(team2=teamid):
@@ -141,16 +141,22 @@ def result():
 
 @app.route('/results_post')
 def results_post():
+    player = db['Players'].find_one(name=session['name'])
+    teamid = player['team']
     score1 = int(request.form['score1'])
     score2 = int(request.form['score2'])
+    match = db['Matches'].find_one(team1=teamid)
+    if not match:
+        match = db['Matches'].find_one(team2=teamid)
+    if not match:
+        raise Exception("NO MATCH WITH YOUR TEAMID")
+
+
     if score1 > score2:
-        #run1v1(winner, looser, False)
-        pass
+        Do1v1(match['team1'], match['team2'], False)
     elif score1 < score2:
-        #run1v1(winner, looser, False)
-        pass
+        Do1v1(match['team2'], match['team1'], False)
     else:
-        #run1v1(winner, looser, True)
-        pass
+        Do1v1(match['team1'], match['team2'], True)
     return redirect('/')
 app.run(debug=True)
