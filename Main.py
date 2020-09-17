@@ -126,6 +126,7 @@ def find_match():
     membersList = list([GetFullName(team['player0']),GetFullName(team['player1']),GetFullName(team['player2']),GetFullName(team['player3']),GetFullName(team['player4'])])
     
     if db['Queue'].find_one(team=teamid) == None:
+        print('joining que')
         joinQueue(teamid)
 
     if db['Matches'].find_one(team1=teamid):
@@ -139,7 +140,7 @@ def find_match():
 def result():
     return render_template('results.html')
 
-@app.route('/results_post')
+@app.route('/results_post', methods=['post'])
 def results_post():
     player = db['Players'].find_one(name=session['name'])
     teamid = player['team']
