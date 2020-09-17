@@ -125,9 +125,9 @@ def find_match():
     mmr = catagorise(team['mmr'])
     membersList = list([GetFullName(team['player0']),GetFullName(team['player1']),GetFullName(team['player2']),GetFullName(team['player3']),GetFullName(team['player4'])])
     
-    team['status']
+    ChangeStatus('Queing',teamid)
 
-    if db['Queue'].find_one(team=teamid) == None:
+    if team['status'] != 'Queing':
         joinQueue(teamid)
 
     if db['Matches'].find_one(team1=teamid):
@@ -139,6 +139,10 @@ def find_match():
 
 @app.route('/results')
 def result():
+    player = db['Players'].find_one(name=session['name'])
+    teamid = player['team']
+    team = db['Teams'].find_one(id=teamid)
+    ChangeStatus('Not Queing',teamid)
     return render_template('results.html')
 
 @app.route('/results_post', methods=['post'])
@@ -148,7 +152,10 @@ def results_post():
     score1 = int(request.form['score1'])
     score2 = int(request.form['score2'])
     match = db['Matches'].find_one(team1=teamid)
-    matchid = match['matchId']
+    try:
+        matchid = match['matchId']
+    except:
+        return redirect('/')
     if not match:
         match = db['Matches'].find_one(team2=teamid)
     if not match:
@@ -157,11 +164,23 @@ def results_post():
     if score1 > score2:
         Do1v1(match['team1'], match['team2'], False)
         RemoveMatches(matchid)
+        print('')
+        print(match['team1'], match['team2'], False)
+        print('Run')
+        print('')
     elif score1 < score2:
         Do1v1(match['team2'], match['team1'], False)
         RemoveMatches(matchid)
+        print(match['team2'], match['team1'], False)
+        print('')
+        print('Run')
+        print('')
     else:
         Do1v1(match['team1'], match['team2'], True)
         RemoveMatches(matchid)
+        print('')
+        print(match['team1'], match['team2'], True)
+        print('Run')
+        print('')
     return redirect('/')
 app.run(debug=True)

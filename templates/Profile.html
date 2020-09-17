@@ -4,6 +4,11 @@
         width: 200px;
         
     }
+
+    .rank-image {
+    width: 50px;
+    vertical-align:middle;
+}
 </style>
 <h1>{{session['name']}}</h1>
 <div style = 'border: 2px solid black;width: max-content;'>
@@ -21,7 +26,7 @@
 <div style = 'border: 2px solid black;width: max-content;'>
 <h2>Your Team: {{session['teamName']}}</h2>
 <h3>
-    Rank: <img src="/static/ranks/{{session['teamRank']}}.png" class="profile-image"> {{session['teamRank']}}
+    Rank: <img src="/static/ranks/{{session['teamRank']}}.png" class="rank-image"> {{session['teamRank']}}
     <br>
     <br>
     Members:
