@@ -1,7 +1,4 @@
 # Game-Orginiser
 
-fool you read me
-
-No, the you fool
-
+A website to orginise games
 
