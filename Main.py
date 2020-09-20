@@ -142,8 +142,13 @@ def result():
     player = db['Players'].find_one(name=session['name'])
     teamid = player['team']
     team = db['Teams'].find_one(id=teamid)
+    match = db['Matches'].find_one(team1=teamid)
+    if not match:
+        match = db['Matches'].find_one(team2=teamid)
+        ChangeStatus('Not Queing',teamid)
+        return render_template('results.html', team1=GetTeamName(match['team1']),team2=GetTeamName(teamid))
     ChangeStatus('Not Queing',teamid)
-    return render_template('results.html')
+    return render_template('results.html', team1=GetTeamName(teamid),team2=GetTeamName(match['team2']))
 
 @app.route('/results_post', methods=['post'])
 def results_post():
